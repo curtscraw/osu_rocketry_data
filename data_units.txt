@@ -1,0 +1,17 @@
+a_x, a_y, a_z are accelerometer data and are measured in g's, where a total magnitude of 0 is freefall, and 1 is seen while sitting still
+
+g_x, g_y, g_z are gyroscope data and measured in degrees per second, often times read up to +/- 20 dps while not rotationg
+
+m_x, m_y, m_z are magnetometer data, measured in gauses
+
+agl is the elevation above ground level, in meters
+
+delta is the time in seconds since the last data point
+
+lat and long are latitude an longitude in decimal degrees format
+
+temp is temperature in degrees C, don't trust this one much
+
+time is a python structure, of date and time, not super useful. use delta instead
+
+gps_time is the time the gps reports, in utc
