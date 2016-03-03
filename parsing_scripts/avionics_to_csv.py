@@ -2,11 +2,12 @@ import datetime
 import re
 import csv
 import sys
+from math import sqrt
 
 INPUT_FILE = sys.argv[1]
 
 #fields to convert to csv
-field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'temp', 'time', 'gps_fix', 'gps_time']
+field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'abs_elev', 'temp', 'time', 'gps_fix', 'gps_time']
 
 p_time = 0
 data_list = []
@@ -39,6 +40,8 @@ with open(INPUT_FILE, 'r') as f:
       d['delta'] = delta.total_seconds()
       p_time = d['time']
 
+    d['abs_elev'] = d['agl'] + 1414
+
     data_list.append(d)
 
 #write to a csv!
@@ -47,5 +50,6 @@ with open(csv_name, 'w') as csv_file:
   writer = csv.DictWriter(csv_file, fieldnames=field_list)
   writer.writeheader()
   writer.writerows(data_list)
+
 
 #done!
