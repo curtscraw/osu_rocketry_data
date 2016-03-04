@@ -6,11 +6,13 @@ import sys
 INPUT_FILE = sys.argv[1]
 
 #fields to convert to csv
-field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'temp', 'time', 'gps_fix', 'gps_time', 'start_cut', 'arm_cut', 'm_z', 'm_y', 'm_x']
+field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'temp', 'time', 'gps_fix', 'gps_time', 'start_cut', 'arm_cut', 'm_z', 'm_y', 'm_x', 'velocity']
 
 skip_list = ["starting log", "armed cutter"]
 p_time = 0
 data_list = []
+alt_last = 0
+first_time = 0
 
 with open(INPUT_FILE, 'r') as f:
   for line in f: 
@@ -43,6 +45,14 @@ with open(INPUT_FILE, 'r') as f:
       d['delta'] = delta.total_seconds()
       p_time = d['time']
 
+    if (not first_time) or (d['delta'] == 0):
+      alt_last = d['agl']
+      d['velocity'] = 0
+      first_time = 1
+    else:
+      d['velocity'] = (d['agl'] - alt_last) / d['delta']
+      alt_last = d['agl']
+    
     data_list.append(d)
 
 #write to a csv!

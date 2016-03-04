@@ -7,10 +7,12 @@ from math import sqrt
 INPUT_FILE = sys.argv[1]
 
 #fields to convert to csv
-field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'abs_elev', 'temp', 'time', 'gps_fix', 'gps_time']
+field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'abs_elev', 'temp', 'time', 'gps_fix', 'gps_time', 'velocity']
 
 p_time = 0
 data_list = []
+first_time = 0
+alt_last = 0
 
 with open(INPUT_FILE, 'r') as f:
   for line in f: 
@@ -42,6 +44,14 @@ with open(INPUT_FILE, 'r') as f:
 
     d['abs_elev'] = d['agl'] + 1414
 
+    if (not first_time) or (d['delta'] == 0):
+      alt_last = d['agl']
+      d['velocity'] = 0
+      first_time = 1
+    else:
+      d['velocity'] = (d['agl'] - alt_last) / d['delta']
+      alt_last = d['agl']
+    
     data_list.append(d)
 
 #write to a csv!

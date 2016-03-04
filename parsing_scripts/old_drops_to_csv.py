@@ -7,10 +7,13 @@ from dateutil import parser
 INPUT_FILE = sys.argv[1]
 
 #fields to convert to csv
-field_list = ['delta', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'agl', 'temp', 'time', 'armed', 'cut']
+field_list = ['delta', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'agl', 'temp', 'time', 'armed', 'cut', 'velocity']
 
 p_time = 0
 data_list = []
+first_time = 0
+alt_last = 0
+vel_list = []
 
 with open(INPUT_FILE, 'r') as f:
   s = '' 
@@ -87,7 +90,22 @@ with open(INPUT_FILE, 'r') as f:
         d['delta'] = delta.total_seconds()
         p_time = d['time']
 
+      if (not first_time) or (d['delta'] == 0):
+        alt_last = d['agl']
+        d['velocity'] = 0
+        first_time = 1
+      else:
+        d['velocity'] = (d['agl'] - alt_last) / d['delta']
+        alt_last = d['agl']
+
+      #vel_list.append(d['velocity']) 
+
+      #if (len(vel_list) > 50):
+	#del vel_list[0]
+
       data_list.append(d)
+      #print str(sum(vel_list)/len(vel_list)) + "          a" + str(d['cut']) + "  " + str(d['delta'])
+
     except StopIteration:
       
       #write to a csv!
