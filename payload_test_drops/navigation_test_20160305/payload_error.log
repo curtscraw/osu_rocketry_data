@@ -1,0 +1,22 @@
+ERROR:root:Got I2C exception on main handler2015-03-01 20:46:07.677387
+Traceback (most recent call last):
+  File "/home/osu_rocketry/payload_system_nav_drop_test.py", line 394, in poll_th
+    dict['agl'] = alt.read_agl()
+  File "/usr/local/lib/python2.7/dist-packages/BMP180.py", line 35, in read_agl
+    raw_alt = self._sensor.read_altitude(self._p0)
+  File "build/bdist.linux-armv7l/egg/Adafruit_BMP/BMP085.py", line 190, in read_altitude
+    pressure = float(self.read_pressure())
+  File "build/bdist.linux-armv7l/egg/Adafruit_BMP/BMP085.py", line 150, in read_pressure
+    UT = self.read_raw_temp()
+  File "build/bdist.linux-armv7l/egg/Adafruit_BMP/BMP085.py", line 113, in read_raw_temp
+    raw = self._device.readU16BE(BMP085_TEMPDATA)
+  File "build/bdist.linux-armv7l/egg/Adafruit_GPIO/I2C.py", line 185, in readU16BE
+    return self.readU16(register, little_endian=False)
+  File "build/bdist.linux-armv7l/egg/Adafruit_GPIO/I2C.py", line 159, in readU16
+    result = self._bus.read_word_data(self._address,register) & 0xFFFF
+IOError: [Errno 121] Remote I/O error
+ERROR:root:Gotexception on recovery attempt
+Traceback (most recent call last):
+  File "/home/osu_rocketry/payload_system_nav_drop_test.py", line 431, in poll_th
+    err_lock.aqcuire()
+AttributeError: 'thread.lock' object has no attribute 'aqcuire'
