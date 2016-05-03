@@ -6,7 +6,7 @@ import sys
 INPUT_FILE = sys.argv[1]
 
 #fields to convert to csv
-field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'temp', 'time', 'gps_fix', 'gps_time', 'start_cut', 'arm_cut', 'm_z', 'm_y', 'm_x', 'velocity']
+field_list = ['delta', 'avionics', 'g_x', 'g_y', 'g_z', 'a_x', 'a_y', 'a_z', 'lat', 'long', 'agl', 'temp', 'time', 'gps_fix', 'gps_time', 'start_cut', 'arm_cut', 'm_z', 'm_y', 'm_x', 'velocity', 'state']
 
 skip_list = ["starting log", "armed cutter"]
 p_time = 0
