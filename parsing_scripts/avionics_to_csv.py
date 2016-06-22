@@ -14,6 +14,8 @@ data_list = []
 first_time = 0
 alt_last = 0
 
+max_a = 0
+
 with open(INPUT_FILE, 'r') as f:
   for line in f: 
     s = line.rstrip()
@@ -53,7 +55,10 @@ with open(INPUT_FILE, 'r') as f:
       alt_last = d['agl']
     
     data_list.append(d)
-
+    
+    if (d['a_x'] > max_a):
+      max_a = d['a_x']
+    
 #write to a csv!
 csv_name = INPUT_FILE + '.csv'
 with open(csv_name, 'w') as csv_file:
@@ -61,5 +66,7 @@ with open(csv_name, 'w') as csv_file:
   writer.writeheader()
   writer.writerows(data_list)
 
+print "maximum acceleration:"
+print max_a
 
 #done!

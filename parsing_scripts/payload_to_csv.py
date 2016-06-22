@@ -13,6 +13,7 @@ p_time = 0
 data_list = []
 alt_last = 0
 first_time = 0
+max_alt = 0
 
 with open(INPUT_FILE, 'r') as f:
   for line in f: 
@@ -54,6 +55,11 @@ with open(INPUT_FILE, 'r') as f:
       alt_last = d['agl']
     
     data_list.append(d)
+
+    if (d['agl'] > max_alt):
+      max_alt = d['agl']
+
+print max_alt
 
 #write to a csv!
 csv_name = INPUT_FILE + '.csv'
